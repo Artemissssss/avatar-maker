@@ -160,7 +160,7 @@
     </section>
     <section class="filtr" id="filtr">
         <h2 class="filtr-text">Фільтри</h2>
-        <p class="cross">x</p>
+        <button class="cross">x</button>
         <div class="cont-fil">
             <ul class="filter-list-c">
                 <li class="filter-list-c"><label for="" class="item-filtr">
@@ -201,7 +201,7 @@
             </ul>
         </div>
         <section class="result filtr">
-            <p class="cross">x</p>
+            <button class="cross">x</button>
             <h2 class="result-text filtr-text">Результат</h2>
             <p class="need">
                 <canvas id="result-canvas" class="result-canvas"></canvas>
@@ -216,16 +216,17 @@
     </footer>
     <image id="theimage"></image>
     <script>
-        function backC(a, b, c, d, f) {
+        function backC(a, b, c) {
             var img = new Image();
             img.src = a;
             var canvas = document.querySelector('canvas');
             var ctx = canvas.getContext("2d");
+            canvas.width = canvas.height = 400;
 
             var img = new Image();
             img.src = a;
             img.onload = function () {
-                ctx.drawImage(img, b, c, d, f);
+                ctx.drawImage(img, 0,0);
             }
         }
         let allElements = {
@@ -245,7 +246,7 @@
                 red: ["./img/hair-red.png", "./img/hairA-red.png", "./img/hairB-red.png", ],
                 blue: ["./img/hair-blue.png", "./img/hairA-blue.png", "./img/hairB-blue.png", ],
                 green: ["./img/hair-green.png", "./img/hairA-green.png", "./img/hairB-green.png", ],
-                pink: ["./img/hair-pink.png", "./img/hairA-pink.png", "./img/hairB-pink.png", ],
+                brown: ["./img/hair-brown.png", "./img/hairA-brown.png", "./img/hairB-brown.png", ],
             },
         }
         document.getElementsByClassName("btn")[0].addEventListener("click", () => {
@@ -264,68 +265,65 @@
             document.getElementsByClassName("result")[0].style.display = "none"
         })
         document.getElementById("make").addEventListener("click", () => {
-            document.getElementsByClassName("result")[0].style.display = "inline-block"
             let back = document.getElementById("back").value
             let human = document.getElementById("human").value
             let hair = document.getElementById("ha").value
             if (back !== "" && human !== "" && hair !== "") {
-                if (back == "Червоний") {
-                    backC(allElements.background.red, 0, 0, 400, 400)
+                setTimeout(()=>{if (back == "Червоний") {
+                    backC(allElements.background.red, 0, 0)
                 } else if (back == "Синій") {
-                    backC(allElements.background.blue, 0, 0, 400, 400)
+                    backC(allElements.background.blue, 0, 0)
                 } else if (back == "Зелений") {
-                    backC(allElements.background.green, 0, 0, 400, 400)
+                    backC(allElements.background.green, 0, 0)
                 } else if (back == "Рожевий") {
-                    backC(allElements.background.pink, 0, 0, 400, 400)
-                }
-
+                    backC(allElements.background.pink, 0, 0)
+                }},0.1)
+                
+                setTimeout(()=>{
                 if (human == "Зомбі") {
-                    backC(allElements.human.zombie, 20, 0, 250, 150)
+                    backC(allElements.human.zombie, 0, 0)
                 } else if (human == "Веселе") {
-                    backC(allElements.human.red, 20, 0, 250, 150)
+                    backC(allElements.human.red, 20, 0)
                 } else if (human == "Сумне") {
-                    backC(allElements.human.green, 20, 0, 250, 150)
+                    backC(allElements.human.green, 20, 0)
                 } else if (human == "Безрукий") {
-                    backC(allElements.human.blue, 20, 0, 250, 150)
-                }
+                    backC(allElements.human.blue, 20, 0)
+                }},0.2)
+                
                 setTimeout(() => {
                     if (hair == "Червоне") {
-                        backC(allElements.hair.red[randomN()], 20, 0, 250, 150)
+                        backC(allElements.hair.red[randomN()], 0, 0)
                     } else if (hair == "Зелене") {
-                        backC(allElements.hair.green[randomN()], 20, 0, 250, 150)
+                        backC(allElements.hair.green[randomN()], 0, 0)
                     } else if (hair == "Синє") {
-                        backC(allElements.hair.blue[randomN()], 20, 0, 250, 150)
+                        backC(allElements.hair.blue[randomN()], 0, 0)
                     } else if (hair == "Темне") {
-                        backC(allElements.hair.brown[randomN()], 20, 0, 250, 150)
+                        backC(allElements.hair.brown[randomN()], 0, 0)
                     }
-                }, 0.1)
-
+                }, 0.4)
+                
             } else {
                 alert("Заповніть усе!")
             }
+            document.getElementsByClassName("result")[0].style.display = "inline-block"
         })
-
-      
-            document.getElementById('download').addEventListener("click", function (e) {
-                var canvas = document.querySelector('#result-canvas');
-                document.querySelector('#result-canvas').style.width = "400px"
-                document.querySelector('#result-canvas').style.height = "400px"
-                var dataURL = canvas.toDataURL("image/jpeg", 1.0);
-
-                downloadImage(dataURL, 'avatar.jpeg');
-            });
-
-
-            function downloadImage(data, filename = 'untitled.jpeg') {
-                var a = document.createElement('a');
-                a.width = "400px"
-                a.height = "400px"
-                a.href = data;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-            }
         
+        
+        document.getElementById('download').addEventListener("click", function (e) {
+            var canvas = document.querySelector('#result-canvas');
+            var dataURL = canvas.toDataURL("image/jpeg", 1);
+
+            downloadImage(dataURL, 'avatar.jpeg');
+        });
+
+
+        function downloadImage(data, filename = 'untitled.jpeg') {
+            var a = document.createElement('a');
+            a.href = data;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+        }
     </script>
 </body>
 
