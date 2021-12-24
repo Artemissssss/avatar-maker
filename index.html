@@ -148,10 +148,10 @@
                 </div>
             </div>
             <div class="teams">
-                <img src="./img/sasha.jpg" alt="Олександр">
+                <img src="./img/att.png" alt="Олександр">
                 <div class="information_of_teams">
                     <h2>Олександр</h2>
-                    <h3>Front-End developer</h3>
+                    <h3>-</h3>
                     <h2>13 років
                         м.Сквира</h2>
                 </div>
@@ -206,20 +206,22 @@
             <p class="need">
                 <canvas id="result-canvas" class="result-canvas"></canvas>
             </p>
-            <button class="make down">Завантажити</button>
+            <button class="make down" id="download">Завантажити</button>
         </section>
     </section>
-<footer>
-    <h2 class="footer-text">CoJ</h2>
-    <h3 class="footer-q">Front-End & JS група</h3>
-    <p class="copyright">©Copyright</p>
-</footer>
+    <footer>
+        <h2 class="footer-text">CoJ</h2>
+        <h3 class="footer-q">Front-End & JS група</h3>
+        <p class="copyright">©Copyright</p>
+    </footer>
+    <image id="theimage"></image>
     <script>
         function backC(a, b, c, d, f) {
             var img = new Image();
             img.src = a;
             var canvas = document.querySelector('canvas');
             var ctx = canvas.getContext("2d");
+
             var img = new Image();
             img.src = a;
             img.onload = function () {
@@ -237,6 +239,7 @@
                 red: "./img/human-red.png",
                 blue: "./img/human-blue.png",
                 green: "./img/human-green.png",
+                zombie: "./img/zombie.png",
             },
             hair: {
                 red: ["./img/hair-red.png", "./img/hairA-red.png", "./img/hairB-red.png", ],
@@ -277,7 +280,7 @@
                 }
 
                 if (human == "Зомбі") {
-                    console.log("g")
+                    backC(allElements.human.zombie, 20, 0, 250, 150)
                 } else if (human == "Веселе") {
                     backC(allElements.human.red, 20, 0, 250, 150)
                 } else if (human == "Сумне") {
@@ -285,19 +288,44 @@
                 } else if (human == "Безрукий") {
                     backC(allElements.human.blue, 20, 0, 250, 150)
                 }
-                if (hair == "Червоне") {
-                    backC(allElements.hair.red[randomN()], 20, 0, 250, 150)
-                } else if (hair == "Зелене") {
-                    backC(allElements.hair.green[randomN()], 20, 0, 250, 150)
-                } else if (hair == "Синє") {
-                    backC(allElements.hair.blue[randomN()], 20, 0, 250, 150)
-                } else if (hair == "Темне") {
-                    backC(allElements.hair.brown[randomN()], 20, 0, 250, 150)
-                }
+                setTimeout(() => {
+                    if (hair == "Червоне") {
+                        backC(allElements.hair.red[randomN()], 20, 0, 250, 150)
+                    } else if (hair == "Зелене") {
+                        backC(allElements.hair.green[randomN()], 20, 0, 250, 150)
+                    } else if (hair == "Синє") {
+                        backC(allElements.hair.blue[randomN()], 20, 0, 250, 150)
+                    } else if (hair == "Темне") {
+                        backC(allElements.hair.brown[randomN()], 20, 0, 250, 150)
+                    }
+                }, 0.1)
+
             } else {
                 alert("Заповніть усе!")
             }
         })
+
+      
+            document.getElementById('download').addEventListener("click", function (e) {
+                var canvas = document.querySelector('#result-canvas');
+                document.querySelector('#result-canvas').style.width = "400px"
+                document.querySelector('#result-canvas').style.height = "400px"
+                var dataURL = canvas.toDataURL("image/jpeg", 1.0);
+
+                downloadImage(dataURL, 'avatar.jpeg');
+            });
+
+
+            function downloadImage(data, filename = 'untitled.jpeg') {
+                var a = document.createElement('a');
+                a.width = "400px"
+                a.height = "400px"
+                a.href = data;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+            }
+        
     </script>
 </body>
 
