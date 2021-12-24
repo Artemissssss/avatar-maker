@@ -103,7 +103,7 @@
                 </div>
                 <div class="materials-item">
                     <img src="./img/hair-red.png" alt="" class="materials-img">
-                    <img src="./img/backP.png" alt="" class="materials-img">
+                    <img src="./img/corona.png" alt="" class="materials-img">
 
                 </div>
 
@@ -182,7 +182,7 @@
                             <option value="Зелене"></option>
                             <option value="Темне"></option>
                             <option value="Лисий"></option>
-                            <option value="Серетне"></option>
+                            <option value="Спеціальне"></option>
                         </datalist>
                     </label></li>
                 <li class="filter-list-c"><label for="" class="item-filtr">
@@ -247,6 +247,7 @@
                 blue: ["./img/hair-blue.png", "./img/hairA-blue.png", "./img/hairB-blue.png", ],
                 green: ["./img/hair-green.png", "./img/hairA-green.png", "./img/hairB-green.png", ],
                 brown: ["./img/hair-brown.png", "./img/hairA-brown.png", "./img/hairB-brown.png", ],
+                secret:["./img/corona.png","./img/hat.png","./img/hat-2.png"]
             },
         }
         document.getElementsByClassName("btn")[0].addEventListener("click", () => {
@@ -299,6 +300,8 @@
                         backC(allElements.hair.blue[randomN()], 0, 0)
                     } else if (hair == "Темне") {
                         backC(allElements.hair.brown[randomN()], 0, 0)
+                    }else if(hair == "Спеціальне"){
+                        backC(allElements.hair.secret[randomN()], 0, 0)
                     }
                 }, 0.4)
                 
